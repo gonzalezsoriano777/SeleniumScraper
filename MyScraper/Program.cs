@@ -42,7 +42,7 @@ namespace MyScraper
                     IWebElement query = driver.FindElement(By.Name("q"));
 
                     // Enter something to search for
-                    query.SendKeys("");
+                    query.SendKeys("CareerDevs");
 
                     // Now submit the form. WebDriver will find the form for us from the element
                     query.Submit();
