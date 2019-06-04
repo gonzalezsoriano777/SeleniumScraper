@@ -41,7 +41,7 @@ namespace MyScraper
             //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
-            
+            // duration time to sign in
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signedin")));
 
