@@ -16,7 +16,7 @@ namespace MyScraper
         {
 
 
-            #region Extra data will be deleted shortly
+            #region Extra data, will be deleted shortly
 
 
             // Create a new instance of the Chrome driver.
@@ -36,14 +36,13 @@ namespace MyScraper
 
             #endregion
 
-
+            
 
             using (IWebDriver driver = new ChromeDriver())
                 {
-                    
 
-                    // opens chrome, and transitions straight the URL
-                    driver.Navigate().GoToUrl("https://finance.yahoo.com/");
+                // opens chrome, and transitions straight the URL
+                driver.Navigate().GoToUrl("https://login.yahoo.com/");
 
                     // Find the text input element by its name
                     IWebElement query = driver.FindElement(By.Name("q"));
