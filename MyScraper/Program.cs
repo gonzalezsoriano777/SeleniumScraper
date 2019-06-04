@@ -41,7 +41,7 @@ namespace MyScraper
             //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
-
+            
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signedin")));
 
@@ -49,6 +49,17 @@ namespace MyScraper
 
             signIn.Click();
 
+            IWebElement username = driver.FindElement(By.Id("login-username"));
+
+            username.SendKeys("gonzalez.soriano");
+
+            username.Submit();
+
+            IWebElement password = driver.FindElement(By.Id("login-passwd"));
+
+            password.SendKeys("Hector3463");
+
+            password.Submit();
 
 
         }
