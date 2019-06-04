@@ -43,12 +43,13 @@ namespace MyScraper
 
                 // opens chrome, and transitions straight the URL
                 driver.Navigate().GoToUrl("https://finance.yahoo.com/");
+                driver.Navigate().GoToUrl("https://login.yahoo.com/");
 
-                    // Find the text input element by its name
-                    IWebElement query = driver.FindElement(By.Name("q"));
+                // Find the text input element by its name
+                IWebElement query = driver.FindElement(By.Name("q"));
 
                     // Enter something to search for
-                    query.SendKeys("Apple");
+                    query.SendKeys("");
 
                     // Now submit the form. WebDriver will find the form for us from the element
                     query.Submit();
