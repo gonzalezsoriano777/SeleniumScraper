@@ -42,7 +42,7 @@ namespace MyScraper
                 {
                     
 
-                    
+                    // opens chrome, and transitions straight the URL
                     driver.Navigate().GoToUrl("https://finance.yahoo.com/");
 
                     // Find the text input element by its name
