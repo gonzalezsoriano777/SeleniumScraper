@@ -15,27 +15,6 @@ namespace MyScraper
         static void Main(string[] args)
         {
 
-
-            #region Extra data, will be deleted shortly
-
-
-            // Create a new instance of the Chrome driver.
-            // Note that it is wrapped in a using clause so that the browser is closed 
-            // and the webdriver is disposed (even in the face of exceptions).
-
-            // Also note that the remainder of the code relies on the interface, 
-            // not the implementation.
-
-            // Further note that other drivers (InternetExplorerDriver,
-            // ChromeDriver, etc.) will require further configuration 
-            // before this example will work. See the wiki pages for the
-            // individual drivers at http://code.google.com/p/selenium/wiki
-            // for further information.
-            //Notice navigation is slightly different than the Java version
-            //This is because 'get' is a keyword in C#
-
-            #endregion
-
             IWebDriver driver = new ChromeDriver();
 
             //Navigating yahoo finance
