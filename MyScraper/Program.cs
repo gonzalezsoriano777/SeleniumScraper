@@ -38,16 +38,18 @@ namespace MyScraper
 
             IWebDriver driver = new ChromeDriver();
 
-            //Navigate to Google.com
+            //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
-            //type a value into Google
-            IWebElement element = driver.FindElement(By.Name("q"));
-
-            element.SendKeys("");
+            
+            IWebElement element = driver.FindElement(By.Name("Sign in"));
 
             element.Submit();
 
+            // Google's search is rendered dynamically with JavaScript.
+            // Wait for the page to load, timeout after 10 seconds
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(duration => duration.Title.StartsWith("yahoo finance", StringComparison.OrdinalIgnoreCase));
 
         }
     }
