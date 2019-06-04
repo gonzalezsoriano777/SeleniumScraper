@@ -42,7 +42,7 @@ namespace MyScraper
                 {
 
                 // opens chrome, and transitions straight the URL
-                driver.Navigate().GoToUrl("https://login.yahoo.com/");
+                driver.Navigate().GoToUrl("https://finance.yahoo.com/");
 
                     // Find the text input element by its name
                     IWebElement query = driver.FindElement(By.Name("q"));
