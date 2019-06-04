@@ -42,8 +42,8 @@ namespace MyScraper
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
             // duration time to sign in
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signedin")));
+            WebDriverWait LogIn = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            LogIn.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signedin")));
 
             IWebElement signIn = driver.FindElement(By.Id("uh-signedin"));
 
@@ -52,14 +52,18 @@ namespace MyScraper
             IWebElement username = driver.FindElement(By.Id("login-username"));
 
             username.SendKeys("gonzalez.soriano");
-
+     
             username.Submit();
+
+            WebDriverWait passwdDuration = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            passwdDuration.Until(ExpectedConditions.ElementToBeClickable(By.Id("login-passwd")));
 
             IWebElement password = driver.FindElement(By.Id("login-passwd"));
 
             password.SendKeys("Hector3463");
+            password.SendKeys(Keys.Enter);
 
-            password.Submit();
+            
 
 
         }
