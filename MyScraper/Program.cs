@@ -31,6 +31,8 @@ namespace MyScraper
             // before this example will work. See the wiki pages for the
             // individual drivers at http://code.google.com/p/selenium/wiki
             // for further information.
+            //Notice navigation is slightly different than the Java version
+            //This is because 'get' is a keyword in C#
 
             #endregion
 
@@ -38,8 +40,7 @@ namespace MyScraper
 
             using (IWebDriver driver = new ChromeDriver())
                 {
-                    //Notice navigation is slightly different than the Java version
-                    //This is because 'get' is a keyword in C#
+                    
 
                     
                     driver.Navigate().GoToUrl("https://finance.yahoo.com/");
