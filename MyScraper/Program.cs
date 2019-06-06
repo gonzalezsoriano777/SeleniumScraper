@@ -44,6 +44,12 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
+            IWebElement portfolio = driver.FindElement(By.LinkText("My Portfolio"));
+
+            portfolio.Click();
+
+
+
 
             
 
