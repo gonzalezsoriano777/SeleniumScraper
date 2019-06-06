@@ -42,8 +42,7 @@ namespace MyScraper
             password.SendKeys("Hector3463");
             password.SendKeys(Keys.Enter);
 
-
-           // driver.Navigate().GoToUrl("http://finance.yahoo.com/");
+            driver.Navigate().GoToUrl("http://finance.yahoo.com/");
             
 
 
