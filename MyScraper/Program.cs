@@ -44,12 +44,7 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
-            WebDriverWait portWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            portWait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("My Portfolio")));
-
-            IWebElement portfolio = driver.FindElement(By.LinkText("My Portfolio"));
-
-            portfolio.Click();
+            driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
 
 
 
