@@ -48,6 +48,8 @@ namespace MyScraper
 
             // used to call each stock to the console
 
+            IWebElement verizonStock = driver.FindElement(By.XPath("f"));
+
 
             
         }
