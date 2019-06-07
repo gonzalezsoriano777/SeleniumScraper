@@ -46,16 +46,7 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
 
-            // used to call each stock to the console
-
-            IWebElement verizonStock = driver.FindElement(By.XPath("//*[@id=/div[1]/table/tbody/tr[1]/td[1]/a"));
-            IWebElement starbucksStock = driver.FindElement(By.XPath("g"));
-            IWebElement  = driver.FindElement(By.XPath("g"));
-            IWebElement  = driver.FindElement(By.XPath("g"));
-            IWebElement  = driver.FindElement(By.XPath("g"));
-            IWebElement  = driver.FindElement(By.XPath("g"));
-
-
+            
 
         }
     }
