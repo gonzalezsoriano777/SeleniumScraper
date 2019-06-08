@@ -76,7 +76,7 @@
   <ItemGroup>
     <Compile Include="Schema\Schema.cs" />
     <Compile Include="Database\ServerDB.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Phase2-Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SqlDatabaseSetup.cs" />
     <Compile Include="Database\SqlServerUnitTest1.cs">
