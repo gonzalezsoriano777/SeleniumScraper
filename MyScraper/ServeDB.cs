@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyScraper
 {
+    // revolve around integrating the database
     public class Server
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("hello world");
-        }
+        
     }
 }

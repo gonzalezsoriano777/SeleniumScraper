@@ -23,13 +23,8 @@ namespace MyScraper
         {
             base.InitializeTest();
         }
-        [TestCleanup()]
-        public void TestCleanup()
-        {
-            base.CleanupTest();
-        }
-
-        [TestMethod()]
+        
+        [Test()]
         public void SqlTest1()
         {
             SqlDatabaseTestActions testActions = this.SqlTest1Data;
