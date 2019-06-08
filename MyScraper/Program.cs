@@ -46,8 +46,9 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
 
-            
+            IWebElement table = driver.FindElement(By.Id("pf-detail-table"));
 
+            
         }
     }
 }
