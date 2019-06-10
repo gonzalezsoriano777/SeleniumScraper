@@ -51,7 +51,6 @@ namespace MyScraper
             // grab table data and print it to the console
             IWebElement table = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table"));
 
-
             IList<IWebElement> allRows = driver.FindElements(By.TagName("tr"));
 
             foreach (IWebElement allRow in allRows)
