@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyScraper
 {
-    private
-    private
-    private
-    private
-    private 
-    private
+    
 
     public class SchemaDB
     {
