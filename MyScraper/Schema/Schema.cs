@@ -34,7 +34,6 @@ namespace MyScraper
             this.marketTime = MarketTime;
             this.volume = Volume;
             this.volumeAvg = VolumeAvg;
-
         }
     }
 }
