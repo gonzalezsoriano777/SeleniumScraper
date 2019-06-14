@@ -9,6 +9,8 @@ namespace MyScraper
     // revolve around integrating the database
     public class Server
     {
+     
         
+
     }
 }
