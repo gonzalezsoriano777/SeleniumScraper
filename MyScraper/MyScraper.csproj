@@ -120,6 +120,7 @@
     <Compile Include="Database\SqlServerUnitTest1.cs">
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="ConsoleStockData.cs" />
     <Compile Include="StockTable.cs">
       <DependentUpon>DBConnection.tt</DependentUpon>
     </Compile>
