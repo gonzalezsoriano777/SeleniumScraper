@@ -22,7 +22,7 @@ namespace MyScraper
 
         //TODO: Be able to open and close DB and import scraped data into the database
 
-        public void DBConnection()
+        public static void DBConnection()
         {
             string connectionString;
             SqlConnection db;
