@@ -47,7 +47,6 @@ namespace MyScraper
             driver.Navigate().GoToUrl("http://finance.yahoo.com/");
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
-
         }
     }
 }
