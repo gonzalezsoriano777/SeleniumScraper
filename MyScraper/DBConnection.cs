@@ -34,6 +34,15 @@ namespace MyScraper
             db.Open();
             Console.WriteLine("Database has been opened");
             db.Close();
+            
+        }
+
+        public void ScrapedData()
+        {
+            for(int stockItem = 0; stockItem <= 10; stockItem++)
+            {
+
+            }
         }
     }
 }

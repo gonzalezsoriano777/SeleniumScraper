@@ -21,6 +21,8 @@ namespace MyScraper
 
             // open the database and now data can be put into it
             Server.DBConnection();
+
+
         }
 
     }
