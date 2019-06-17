@@ -20,7 +20,7 @@ namespace MyScraper
             //Selenium.Connect();
 
             // open the database and now data can be put into it
-            Server.DBConnection();
+            
 
 
         }

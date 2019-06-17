@@ -15,12 +15,11 @@ namespace MyScraper
     public partial class StockTable
     {
         public string Symbol { get; set; }
-        public double LastPrice { get; set; }
-        public double Change { get; set; }
-        public double Chg { get; set; }
+        public string LastPrice { get; set; }
+        public string Change { get; set; }
+        public string PChg { get; set; }
         public string Currency { get; set; }
-        public System.DateTime MarketTime { get; set; }
-        public double Volume { get; set; }
-        public double VolumeAvg { get; set; }
+        public string MarketTime { get; set; }
+        public string Volume { get; set; }
     }
 }
