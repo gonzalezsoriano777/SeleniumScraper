@@ -94,8 +94,12 @@ namespace MyScraper
             Console.WriteLine("Database has been opened");
             Console.WriteLine();
 
-            foreach ()
+            foreach (StockTable stock in ListOfStocks)
             {
+                SqlCommand insert = new SqlCommand
+                    ("INSERT INTO [StockTable] (Symbol, LastPrice, Change, PChg, Currency, MarketTime, Volume) " +
+                    "VALUES ( @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volume )", db);
+
 
             }
 
