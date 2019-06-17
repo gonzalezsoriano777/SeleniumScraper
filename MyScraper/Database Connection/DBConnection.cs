@@ -50,22 +50,22 @@ namespace MyScraper
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
         }
 
-       // public string[] fields = { "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volume", };
+        // public string[] fields = { "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volume", };
 
         List<StockTable> ListOfStocks = new List<StockTable>();
 
         public void ScrapedData()
         {
-            
+
             for (int stock = 1; stock <= 10; stock++)
             {
                 var symbol = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[1]/span")).GetAttribute("innerText");
-                var lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[2]/span")).GetAttribute("innerText");
-                var change = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[3]/span")).GetAttribute("innerText");
-                var pchg = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[4]/span")).GetAttribute("innerText");
-                var currency = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[5]/span")).GetAttribute("innerText");
-                var marketTime = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[6]/span")).GetAttribute("innerText");
-                var volume = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr["+ stock +"]/th[7]/span")).GetAttribute("innerText");
+                var lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[2]/span")).GetAttribute("innerText");
+                var change = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[3]/span")).GetAttribute("innerText");
+                var pchg = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[4]/span")).GetAttribute("innerText");
+                var currency = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[5]/span")).GetAttribute("innerText");
+                var marketTime = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[6]/span")).GetAttribute("innerText");
+                var volume = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/thead/tr[" + stock + "]/th[7]/span")).GetAttribute("innerText");
 
                 StockTable newStock = new StockTable();
                 newStock.Symbol = symbol;
@@ -82,25 +82,25 @@ namespace MyScraper
             driver.Quit();
         }
 
-            public void DBConnection()
-            {
-                string connectionString;
-                SqlConnection db;
+        public void DBConnection()
+        {
+            string connectionString;
+            SqlConnection db;
 
-                connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                db = new SqlConnection(connectionString);
-                db.Open();
-                Console.WriteLine("Database has been opened");
-                Console.WriteLine();
+            db = new SqlConnection(connectionString);
+            db.Open();
+            Console.WriteLine("Database has been opened");
+            Console.WriteLine();
 
             foreach ()
             {
 
             }
-                
-                
 
-            }
+
+
+        }
     }
 }

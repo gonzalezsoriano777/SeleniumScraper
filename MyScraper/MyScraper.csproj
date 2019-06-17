@@ -98,17 +98,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBConnection.Context.cs">
+    <Compile Include="Database Connection\DBConnection.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBConnection.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBConnection.cs">
+    <Compile Include="Database Connection\DBConnection.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBConnection.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBConnection.Designer.cs">
+    <Compile Include="Database Connection\DBConnection.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBConnection.edmx</DependentUpon>
@@ -119,18 +119,17 @@
     <Compile Include="Database\SqlServerUnitTest1.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="ConsoleStockData.cs" />
-    <Compile Include="StockTable.cs">
+    <Compile Include="Database Connection\StockTable.cs">
       <DependentUpon>DBConnection.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="DBConnection.edmx">
+    <EntityDeploy Include="Database Connection\DBConnection.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBConnection.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DBConnection.edmx.diagram">
+    <None Include="Database Connection\DBConnection.edmx.diagram">
       <DependentUpon>DBConnection.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -168,12 +167,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="DBConnection.Context.tt">
+    <Content Include="Database Connection\DBConnection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DBConnection.Context.cs</LastGenOutput>
       <DependentUpon>DBConnection.edmx</DependentUpon>
     </Content>
-    <Content Include="DBConnection.tt">
+    <Content Include="Database Connection\DBConnection.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBConnection.edmx</DependentUpon>
       <LastGenOutput>DBConnection.cs</LastGenOutput>
