@@ -17,10 +17,10 @@ namespace MyScraper
         static void Main(string[] args)
         {
 
-            // Selenium.Connect();
+            //Selenium.Connect();
 
             // open the database and now data can be put into it
-            Server.DBConnection();
+            Server.ScrapedData();
 
 
         }
