@@ -16,7 +16,6 @@ namespace MyScraper
     {
         //TODO: Be able to open and close DB and import scraped data into the database
 
-        
         IWebDriver driver = new ChromeDriver();
 
         public void BrowserConnection()
