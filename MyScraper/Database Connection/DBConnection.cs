@@ -57,7 +57,7 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
 
-            driver.Quit();
+            
         }
 
         public void ConnectionToDB()
@@ -66,21 +66,19 @@ namespace MyScraper
             string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection db;
 
+            // db will be connected with the connectionString
             db = new SqlConnection(connectionString);
-            db.Open();
+  
 
-            Console.WriteLine();
-            Console.WriteLine("Database has been opened");
-            
-            for(int stock = 1; stock <= 10; stock++)
+            for (int stocks = 1; stocks <= 10; stocks++)
             {
-                var symbol = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[1]")).GetAttribute("innerText");
-                var lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[2]")).GetAttribute("innerText");
-                var change = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[3]")).GetAttribute("innerText");
-                var pchg = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[4]")).GetAttribute("innerText");
-                var currency = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[5]")).GetAttribute("innerText");
-                var marketTime = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[6]")).GetAttribute("innerText");
-                var volumeAvg = driver.FindElement(By.XPath("//*[@id=\"pf - detail - table\"]/div[1]/table/tbody/tr[" + stock + "]/td[9]")).GetAttribute("innerText");
+                var symbol = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[1]")).GetAttribute("innerText");
+                var lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[2]")).GetAttribute("innerText");
+                var change = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[3]")).GetAttribute("innerText");
+                var pchg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[4]")).GetAttribute("innerText");
+                var currency = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[5]")).GetAttribute("innerText");
+                var marketTime = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[6]")).GetAttribute("innerText");
+                var volumeAvg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[9]")).GetAttribute("innerText");
 
                 StockTable newStocks = new StockTable();
                 newStocks.Symbol = symbol;
@@ -94,9 +92,27 @@ namespace MyScraper
                 ListOfStocks.Add(newStocks);
             }
 
+            driver.Quit();
+
+            db.Open();
+            Console.WriteLine();
+            Console.WriteLine("Database has been updated");
+
             foreach (StockTable stock in ListOfStocks)
             {
+                SqlCommand insert = new SqlCommand("INSERT INTO [StockTable] (Symbol, Change, PChg, Currency, MarketTime, VolumeAvg) VALUES (@symbol, @change, @pchg, @currency, @marketTime, @volumeAvg)", db);
 
+                insert.Parameters.AddWithValue("@symbol", stock.Symbol);
+                insert.Parameters.AddWithValue("@lastPrice", stock.LastPrice);
+                insert.Parameters.AddWithValue("@change", stock.Change);
+                insert.Parameters.AddWithValue("@pchg", stock.PChg);
+                insert.Parameters.AddWithValue("@currency", stock.Currency);
+                insert.Parameters.AddWithValue("@marketTime", stock.MarketTime);
+                insert.Parameters.AddWithValue("@volumeAvg", stock.VolumeAvg);
+                insert.ExecuteNonQuery();
+
+                db.Close();
+                Console.WriteLine("Database has been updated with Info");
             }
 
         }

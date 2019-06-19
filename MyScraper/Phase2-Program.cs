@@ -21,7 +21,6 @@ namespace MyScraper
             Server DB = new Server();
             DB.LogginIn();
             DB.ConnectionToDB();
-            // YahooFinanceCredentials.LogginIn();
             
 
         }
