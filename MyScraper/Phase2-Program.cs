@@ -19,7 +19,10 @@ namespace MyScraper
 
             // open the database and now data can be put into it
             Server DB = new Server();
-            DB.ScrapedData();
+            DB.LogginIn();
+            DB.ConnectionToDB();
+            // YahooFinanceCredentials.LogginIn();
+            
 
         }
 

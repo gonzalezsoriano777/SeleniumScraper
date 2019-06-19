@@ -20,6 +20,9 @@ namespace MyScraper
         public string PChg { get; set; }
         public string Currency { get; set; }
         public string MarketTime { get; set; }
-        public string Volume { get; set; }
+        public string VolumeAvg { get; set; }
     }
+
+    
+    
 }
