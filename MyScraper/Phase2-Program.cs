@@ -22,7 +22,9 @@ namespace MyScraper
            // server.LogginIn();
 
            Scraping dB = new Scraping();
-           dB.InsertingData();            
+           dB.InsertingData();
+            dB.DeletingData();
+
             
 
         }

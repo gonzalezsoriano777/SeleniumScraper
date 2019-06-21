@@ -58,5 +58,10 @@ namespace MyScraper
         {
 
         }
+
+        public void UpdatingData()
+        {
+
+        }
     }
 }
