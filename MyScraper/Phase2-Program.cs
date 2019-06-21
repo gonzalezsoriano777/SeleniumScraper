@@ -18,11 +18,11 @@ namespace MyScraper
         {
 
             // open the database and now data can be put into it
-            YahooCredentials server = new YahooCredentials();
-            server.LogginIn();
+           // YahooCredentials server = new YahooCredentials();
+           // server.LogginIn();
 
-           // Scraping dB = new Scraping();
-           // dB.ScrapingData();            
+           Scraping dB = new Scraping();
+           dB.InsertingData();            
             
 
         }
