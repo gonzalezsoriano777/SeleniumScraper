@@ -48,7 +48,7 @@ namespace MyScraper
                     Console.WriteLine("Database has been updated with info");
                    
                 }
-                db.Close();
+                // db.Close();
             }
 
             Console.WriteLine("Database has been closed");
@@ -56,6 +56,24 @@ namespace MyScraper
 
         public void DeletingData()
         {
+
+            string deletion = "DELETE FROM dbo.StockTable";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand command = new SqlCommand(deletion, conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                Console.WriteLine("Database data has been put to deletion!");
+
+            }
+
+            
 
         }
 
