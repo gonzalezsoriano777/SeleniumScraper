@@ -98,20 +98,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database Connection\DBConnection.Context.cs">
+    <Compile Include="DbEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBConnection.Context.tt</DependentUpon>
+      <DependentUpon>DbEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database Connection\DBConnection.cs">
+    <Compile Include="DbEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBConnection.tt</DependentUpon>
+      <DependentUpon>DbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database Connection\DBConnection.Designer.cs">
+    <Compile Include="DbEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBConnection.edmx</DependentUpon>
+      <DependentUpon>DbEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Phase2-Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,18 +119,20 @@
     <Compile Include="Database\SqlServerUnitTest1.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database Connection\StockTable.cs">
-      <DependentUpon>DBConnection.tt</DependentUpon>
+    <Compile Include="Scraping.cs" />
+    <Compile Include="StockTable.cs">
+      <DependentUpon>DbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="YahooCredentials.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <EntityDeploy Include="Database Connection\DBConnection.edmx">
+    <None Include="App.Config" />
+    <EntityDeploy Include="DbEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBConnection.Designer.cs</LastGenOutput>
+      <LastGenOutput>DbEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Database Connection\DBConnection.edmx.diagram">
-      <DependentUpon>DBConnection.edmx</DependentUpon>
+    <None Include="DbEntities.edmx.diagram">
+      <DependentUpon>DbEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -165,21 +167,20 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="Database Connection\DBConnection.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBConnection.Context.cs</LastGenOutput>
-      <DependentUpon>DBConnection.edmx</DependentUpon>
-    </Content>
-    <Content Include="Database Connection\DBConnection.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBConnection.edmx</DependentUpon>
-      <LastGenOutput>DBConnection.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbEntities.edmx</DependentUpon>
+      <LastGenOutput>DbEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DbEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbEntities.edmx</DependentUpon>
+      <LastGenOutput>DbEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
