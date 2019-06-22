@@ -23,7 +23,7 @@ namespace MyScraper
 
            Scraping dB = new Scraping();
             //dB.InsertingData();
-            dB.DeletingData();
+            //dB.DeletingData();
             //dB.UpdatingData();
             
 

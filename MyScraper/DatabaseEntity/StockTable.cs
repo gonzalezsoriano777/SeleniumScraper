@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyScraper
+namespace MyScraper.DatabaseEntity
 {
     using System;
     using System.Collections.Generic;

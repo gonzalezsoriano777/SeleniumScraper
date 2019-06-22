@@ -98,17 +98,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbEntities.Context.cs">
+    <Compile Include="DatabaseEntity\DbEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbEntities.cs">
+    <Compile Include="DatabaseEntity\DbEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbEntities.Designer.cs">
+    <Compile Include="DatabaseEntity\DbEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbEntities.edmx</DependentUpon>
@@ -120,18 +120,18 @@
       <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Scraping.cs" />
-    <Compile Include="StockTable.cs">
+    <Compile Include="DatabaseEntity\StockTable.cs">
       <DependentUpon>DbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="YahooCredentials.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="DbEntities.edmx">
+    <EntityDeploy Include="DatabaseEntity\DbEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DbEntities.edmx.diagram">
+    <None Include="DatabaseEntity\DbEntities.edmx.diagram">
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -171,12 +171,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DbEntities.Context.tt">
+    <Content Include="DatabaseEntity\DbEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbEntities.edmx</DependentUpon>
       <LastGenOutput>DbEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DbEntities.tt">
+    <Content Include="DatabaseEntity\DbEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbEntities.edmx</DependentUpon>
       <LastGenOutput>DbEntities.cs</LastGenOutput>
