@@ -15,7 +15,7 @@ namespace MyScraper
             { "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
         string[] stockData = 
-            { "SQL", "T", "B", "R", "S", "12:30PM", "R" };
+            { "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
 
         string connectionString  = 
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
@@ -70,7 +70,6 @@ namespace MyScraper
 
                 conn.Close();
                 Console.WriteLine("Database data has been put to deletion!");
-
             }
 
             
@@ -79,6 +78,8 @@ namespace MyScraper
 
         public void UpdatingData()
         {
+
+            string updatePhase = "UPDATE ";
 
         }
     }
