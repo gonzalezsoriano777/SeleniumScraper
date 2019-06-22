@@ -14,7 +14,7 @@ namespace MyScraper
         string[] stockFields = 
             { "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
-        string[] stockData = 
+        string[] stockInfo = 
             { "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
 
         string connectionString  = 
@@ -30,13 +30,13 @@ namespace MyScraper
 
                 using (SqlCommand import = new SqlCommand(insertion, db))
                 {
-                    import.Parameters.AddWithValue("@symbol", stockData[0]);
-                    import.Parameters.AddWithValue("@lastPrice", stockData[1]);
-                    import.Parameters.AddWithValue("@change", stockData[2]);
-                    import.Parameters.AddWithValue("@pchg", stockData[3]);
-                    import.Parameters.AddWithValue("@currency", stockData[4]);
-                    import.Parameters.AddWithValue("@marketTime", stockData[5]);
-                    import.Parameters.AddWithValue("@volumeAvg", stockData[6]);
+                    import.Parameters.AddWithValue("@symbol", stockInfo[0]);
+                    import.Parameters.AddWithValue("@lastPrice", stockInfo[1]);
+                    import.Parameters.AddWithValue("@change", stockInfo[2]);
+                    import.Parameters.AddWithValue("@pchg", stockInfo[3]);
+                    import.Parameters.AddWithValue("@currency", stockInfo[4]);
+                    import.Parameters.AddWithValue("@marketTime", stockInfo[5]);
+                    import.Parameters.AddWithValue("@volumeAvg", stockInfo[6]);
 
 
                     db.Open();
