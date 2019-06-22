@@ -45,7 +45,7 @@ namespace MyScraper
                     // returns the number of rows affected by the execution against conString
                     int result = import.ExecuteNonQuery();
 
-                    Console.WriteLine("Database has been updated with info");
+                    Console.WriteLine("Database has been INSERTED with info");
                    
                 }
                 // db.Close();
@@ -69,7 +69,7 @@ namespace MyScraper
                 }
 
                 conn.Close();
-                Console.WriteLine("Database data has been put to deletion!");
+                Console.WriteLine("Database data has been put to DELETION!");
             }
 
             
@@ -79,7 +79,20 @@ namespace MyScraper
         public void UpdatingData()
         {
 
-            string updatePhase = "UPDATE ";
+            string updatePhase = "UPDATE dbo.StockTable SET Symbol = 'SNL'";
+
+            using(SqlConnection connString = new SqlConnection(connectionString))
+            {
+                connString.Open();
+
+                using(SqlCommand command = new SqlCommand(updatePhase, connString))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                connString.Close();
+                Console.WriteLine("Database has been UPDATED!");
+            }
 
         }
     }
