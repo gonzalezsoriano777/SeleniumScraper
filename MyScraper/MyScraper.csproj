@@ -134,7 +134,7 @@
     <None Include="DatabaseEntity\DbEntities.edmx.diagram">
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="DatabaseEntity\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Database\SqlServerUnitTest1.resx">

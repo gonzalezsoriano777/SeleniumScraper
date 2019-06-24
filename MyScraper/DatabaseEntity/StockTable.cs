@@ -14,6 +14,7 @@ namespace MyScraper.DatabaseEntity
     
     public partial class StockTable
     {
+        public int Stock_ID { get; set; }
         public string Symbol { get; set; }
         public string LastPrice { get; set; }
         public string Change { get; set; }
