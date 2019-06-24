@@ -15,6 +15,7 @@ namespace MyScraper
 {
     public class Scraping
     {
+     
 
         string[] stockFields =
             { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
@@ -28,7 +29,6 @@ namespace MyScraper
 
         public void InsertingData()
         {
-
             using (SqlConnection db = new SqlConnection(connectionString))
             {
                 string insertion = "INSERT INTO dbo.StockTable ( Stock_ID, Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg) VALUES ( @stock_ID , @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg)";
@@ -54,8 +54,9 @@ namespace MyScraper
                     Console.WriteLine("Database has been INSERTED with info");
 
                 }
-                 db.Close();
+                db.Close();
             }
+
 
             Console.WriteLine("Database has been closed");
         }
