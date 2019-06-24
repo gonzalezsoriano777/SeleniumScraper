@@ -11,19 +11,19 @@ namespace MyScraper
     public class Scraping
     {
 
-        string[] stockFields = 
+        string[] stockFields =
             { "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
-        string[] stockInfo = 
+        string[] stockInfo =
             { "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
 
-        string connectionString  = 
+        string connectionString =
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
             Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public void InsertingData()
         {
-           
+
             using (SqlConnection db = new SqlConnection(connectionString))
             {
                 string insertion = "INSERT INTO dbo.StockTable (Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg) VALUES (@symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg)";
@@ -46,7 +46,7 @@ namespace MyScraper
                     int result = import.ExecuteNonQuery();
 
                     Console.WriteLine("Database has been INSERTED with info");
-                   
+
                 }
                 // db.Close();
             }
@@ -72,7 +72,7 @@ namespace MyScraper
                 Console.WriteLine("Database data has been put to DELETION!");
             }
 
-            
+
 
         }
 
@@ -81,11 +81,11 @@ namespace MyScraper
 
             string updatePhase = "UPDATE dbo.StockTable SET Symbol = 'SNL'";
 
-            using(SqlConnection connString = new SqlConnection(connectionString))
+            using (SqlConnection connString = new SqlConnection(connectionString))
             {
                 connString.Open();
 
-                using(SqlCommand command = new SqlCommand(updatePhase, connString))
+                using (SqlCommand command = new SqlCommand(updatePhase, connString))
                 {
                     command.ExecuteNonQuery();
                 }
