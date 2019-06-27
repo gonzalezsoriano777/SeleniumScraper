@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
+using MyScraper.DatabaseEntity;
 
 namespace MyScraper
 {
@@ -41,15 +42,23 @@ namespace MyScraper
             password.SendKeys("Hector3463");
             password.SendKeys(Keys.Enter);
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-            driver.Navigate().GoToUrl("http://finance.yahoo.com/");
+            driver.Navigate().GoToUrl("https://finance.yahoo.com/");
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
+            
+            // grab table data and print it to the console
+            IWebElement table = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table"));
 
-            driver.Close();
+            IList<IWebElement> allRows = driver.FindElements(By.TagName("tr"));
+
+            foreach (IWebElement allRow in allRows)
+            {
+                Console.WriteLine(allRow.Text);
+            }
+
+
         }
     }
 }
