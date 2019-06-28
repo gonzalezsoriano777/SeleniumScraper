@@ -15,7 +15,7 @@ namespace MyScraper
     {
         IWebDriver driver = new ChromeDriver();
 
-        public void LogginIn()
+        public void Credentials()
         {
             //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");

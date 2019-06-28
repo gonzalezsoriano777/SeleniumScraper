@@ -16,77 +16,81 @@ namespace MyScraper
 {
     public class Scraping
     {
-        
+        IWebDriver driver = new ChromeDriver();
+
         string[] stockFields =
             { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
+        
+
         string[] stockInfo =
-            { "1" , "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
+            { "0" , "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
 
         string connectionString =
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
             Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public void InsertingData()
+        public void LogginIn()
         {
-            IWebDriver driver = new ChromeDriver();
-
+            
             //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");
 
             // duration time to sign in
             WebDriverWait LogIn = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             LogIn.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signin")));
-
             IWebElement signIn = driver.FindElement(By.Id("uh-signin"));
 
             signIn.Click();
 
             IWebElement username = driver.FindElement(By.Id("login-username"));
-
             username.SendKeys("gonzalez.soriano");
-
             username.Submit();
 
             WebDriverWait passwdDuration = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             passwdDuration.Until(ExpectedConditions.ElementToBeClickable(By.Id("login-passwd")));
-
             IWebElement password = driver.FindElement(By.Id("login-passwd"));
-
             password.SendKeys("Hector3463");
             password.SendKeys(Keys.Enter);
+        }
 
+        public void TransitionToPortfolio()
+        {
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
+        }
 
-            int counter;
+        public void InsertingData()
+        {
+             int counter;
 
-            IWebElement tableBody = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table"));
-            System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> stockList = tableBody.FindElements(By.TagName("tr"));
-            counter = stockList.Count;
+             IWebElement tableBody = driver.FindElement(By.TagName("tbody"));
+             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> stockList = tableBody.FindElements(By.TagName("tr"));
+             counter = stockList.Count;
 
-            List<StockTable> ListOfStocks = new List<StockTable>();
+             List<StockTable> ListOfStocks = new List<StockTable>();
 
-            for (int stocks = 1; stocks <= counter; stocks++)
-            {
-                var symbol = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[1]")).GetAttribute("innerText");
-                var lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[2]")).GetAttribute("innerText");
-                var change = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[3]")).GetAttribute("innerText");
-                var pchg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[4]")).GetAttribute("innerText");
-                var currency = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[5]")).GetAttribute("innerText");
-                var marketTime = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[6]")).GetAttribute("innerText");
-                var volumeAvg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/thead/tr/th[9]")).GetAttribute("innerText");
+             for (int stocks = 1; stocks <= counter; stocks++)
+             {
+                 string symbol = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[1]/a")).GetAttribute("innerText");
+                 string lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[2]/span")).GetAttribute("innerText");
+                 string change = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[3]/span")).GetAttribute("innerText");
+                 string pchg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[4]/span")).GetAttribute("innerText");
+                 string currency = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[5]")).GetAttribute("innerText");
+                 string marketTime = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[6]/span")).GetAttribute("innerText");
+                 string volumeAvg = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[9]")).GetAttribute("innerText");
 
+                
 
-                StockTable newStocks = new StockTable();
-                newStocks.Symbol = symbol;
-                newStocks.LastPrice = lastPrice;
-                newStocks.Change = change;
-                newStocks.PChg = pchg;
-                newStocks.Currency = currency;
-                newStocks.MarketTime = marketTime;
-                newStocks.VolumeAvg = volumeAvg;
+                 StockTable newStocks = new StockTable();
+                 newStocks.Symbol = symbol;
+                 newStocks.LastPrice = lastPrice;
+                 newStocks.Change = change;
+                 newStocks.PChg = pchg;
+                 newStocks.Currency = currency;
+                 newStocks.MarketTime = marketTime;
+                 newStocks.VolumeAvg = volumeAvg;
 
-                ListOfStocks.Add(newStocks);
+                 ListOfStocks.Add(newStocks);
             }
 
             driver.Quit();
@@ -98,9 +102,9 @@ namespace MyScraper
 
             foreach(StockTable stock in ListOfStocks)
             {
+                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Stock_ID, Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @stock_ID, @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
 
-                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
-
+                insert.Parameters.AddWithValue("@stock_ID", stockInfo[0]);
                 insert.Parameters.AddWithValue("symbol", stock.Symbol);
                 insert.Parameters.AddWithValue("lastPrice", stock.LastPrice);
                 insert.Parameters.AddWithValue("change", stock.Change);
@@ -118,11 +122,6 @@ namespace MyScraper
 
             Console.WriteLine();
             Console.WriteLine("Database has been closed!");
-
-        }
-
-        public void StockHistory()
-        {
 
         }
 
@@ -151,7 +150,7 @@ namespace MyScraper
         public void UpdatingData()
         {
 
-            string updatePhase = "UPDATE dbo.StockTable SET Symbol = 'SNL' WHERE Stock_ID = '1'";
+            string updatePhase = "UPDATE dbo.StockTable SET Stock_ID = Stock_ID + 1";
 
             using (SqlConnection connString = new SqlConnection(connectionString))
             {
