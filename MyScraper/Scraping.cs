@@ -22,9 +22,9 @@ namespace MyScraper
             { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
         
-
-        string[] stockInfo =
-            { "0" , "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
+        //used for dummy data
+     //   string[] stockInfo =
+       //     { "0" , "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
 
         string connectionString =
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
@@ -104,7 +104,6 @@ namespace MyScraper
             {
                 SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Stock_ID, Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @stock_ID, @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
 
-                insert.Parameters.AddWithValue("@stock_ID", stockInfo[0]);
                 insert.Parameters.AddWithValue("symbol", stock.Symbol);
                 insert.Parameters.AddWithValue("lastPrice", stock.LastPrice);
                 insert.Parameters.AddWithValue("change", stock.Change);
