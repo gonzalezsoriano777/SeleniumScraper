@@ -22,12 +22,15 @@ namespace MyScraper
          // server.Credentials();
 
            Scraping dB = new Scraping();
-            dB.LogginIn();
-            dB.TransitionToPortfolio();
-            dB.InsertingData();
-           // dB.DeletingData();
-            dB.UpdatingData();
-           
+
+           // dB.LogginIn();
+           // dB.TransitionToPortfolio();
+           // dB.InsertingData();
+
+           // dB.UpdatingData();
+
+            // dB.DeletingData();
+
 
         }
 

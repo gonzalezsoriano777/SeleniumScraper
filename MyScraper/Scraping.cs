@@ -18,13 +18,12 @@ namespace MyScraper
     {
         IWebDriver driver = new ChromeDriver();
 
-        string[] stockFields =
-            { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
+        //string[] stockFields =
+          //  { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
         
         //used for dummy data
-     //   string[] stockInfo =
-       //     { "0" , "SQL", "T", "B", "R", "S", " 2/15/2001 12:30PM", "R" };
+         
 
         string connectionString =
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
@@ -102,7 +101,7 @@ namespace MyScraper
 
             foreach(StockTable stock in ListOfStocks)
             {
-                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Stock_ID, Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @stock_ID, @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
+                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
 
                 insert.Parameters.AddWithValue("symbol", stock.Symbol);
                 insert.Parameters.AddWithValue("lastPrice", stock.LastPrice);
@@ -149,7 +148,7 @@ namespace MyScraper
         public void UpdatingData()
         {
 
-            string updatePhase = "UPDATE dbo.StockTable SET Stock_ID = Stock_ID + 1";
+            string updatePhase = "UPDATE dbo.StockTable SET Symbol = 'VZ' WHERE Stock_ID = 1";
 
             using (SqlConnection connString = new SqlConnection(connectionString))
             {
