@@ -23,9 +23,9 @@ namespace MyScraper
 
            Scraping dB = new Scraping();
 
-           // dB.LogginIn();
-           // dB.TransitionToPortfolio();
-           // dB.InsertingData();
+           dB.LogginIn();
+            dB.TransitionToPortfolio();
+            dB.InsertingData();
 
            // dB.UpdatingData();
 
