@@ -23,13 +23,13 @@ namespace MyScraper
 
            Scraping dB = new Scraping();
 
-           dB.LogginIn();
+            dB.LogginIn();
             dB.TransitionToPortfolio();
             dB.InsertingData();
 
            // dB.UpdatingData();
 
-            // dB.DeletingData();
+           //  dB.DeletingData();
 
 
         }
