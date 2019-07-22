@@ -1,0 +1,366 @@
+// Instructions:
+// ------------------------------------------------------------------------------------------------
+//
+//  Place in the Preload or On Ad Download (Dropdown Set To JavaScript) Section of the Ad for a Standard, Polite, or Expandable ad
+//
+//		http://ds.serving-sys.com/BurstingRes/CustomScripts/ghostery.js?adid=[%tp_adid%]&flightid=[%tp_flightid%]&coid=709&nid=2127&ad_z=999999&position=bottom-right&ecaid=9773663&delay_start=1
+//
+// Parameters:
+//
+//		coid 		Unique identifier sent in tags provided by Evidon Better Advertising
+//		nid			Unique identifier sent in tags provided by Evidon Better Advertising
+//		ad_z		The z-index of the Ad Choice icon.  
+//		position	The corner of the ad to show the button on.  Possible values: top-left, top-right, bottom-left, bottom-right 
+//		ecaid		Ad Server Macros
+//		delay_start	Delays the Ad Choice button from positioning and appearing.  This is useful in the case of polite ads with rich flash being that the button needs to wait until the rich flash exists before positioning itself.  Either set this parameter to 1 (delay_start=1) or remove it entirely.  
+//
+//		(Note: all parameters should be provided in the script provided by Evidon Better Advertising)
+//
+// Modified : 2014-04-10b Mike Denton
+// Updated: June-03-2014 by Ivan Ramirez.  Added support for secure (https) calls to the Ghostery (formerly Evidon) domain. This file also invokes Ghostery's file surly.js (instead of ba.js used by the previous version)
+// Updates: Version 1.0.1 July-10-2014 by Jason Brown. Added in CSS fix from evidon.js (setting width of BAP-Holder to 'auto'). Changed for/in loop in mmQueryString() to a regular for loop to avoid errors.
+// Update: May-16-2016 by John Kalland: Forked copy of http://ds.serving-sys.com/BurstingRes/CustomScripts/ghostery.js that is updated to use ghostery's new, dynamic tag "durly.js". Major change includes that durly seems to auto-load, so no more calling BAP start or setting up the _bao object on our end. Also, position is now passed through the script rather than the _bao
+(function () {
+    //-------------------------------------------------------------------------------------------
+    //Injection Point
+    // Allow For Multiple Ad Choice Scripts
+    if (typeof (mdACE) == "undefined") {
+        mdACE = new Array();
+    }
+    var i = mdACE.length;
+    mdACE[i] = new AdChoiceEvidon();
+    mdACE[i].init();
+    // Start Ad Choice Scripts
+    mdACE[i].writeBAO();
+
+    function AdChoiceEvidon() {
+        var gEbQueries = new Array();
+        var mmRand = Math.floor(Math.random() * 100000);
+        var oc = false;
+        var nc = false;
+        var bannerId = undefined;
+        var injectionReference = undefined;
+        var displayDoc = undefined;
+        var displayWin = undefined;
+        var self = this;
+        var thisPtcl = undefined;
+
+        self.tagWidth = undefined;
+        self.tagHeight = undefined;
+        //--------------------------------------------------------------------------------------------
+        self.init = function () {
+            // MD 20140408 Search for script without protocol included
+            var scriptPath = mmLastScriptPath("ds.serving-sys.com/BurstingRes/CustomScripts/ghostery.js");
+            gEbQueries = mmQueryString(scriptPath);
+            thisPtcl = document.location.protocol == 'https:' ? 'https' : 'http';
+            var tagProperties = mmLastScriptPath("pli=" + gEbQueries.flightid);
+            if (tagProperties) {
+                tagProperties = mmQueryString(tagProperties);
+                self.tagWidth = tagProperties.w;
+                self.tagHeight = tagProperties.h;
+
+            } else {
+                // didn't find the tag anywhere as script or create iframe tag on the current displayWin
+                // try to find the ebO object in this window, or any subwindows/subIFrames
+                self.getWidthHeightFromEboInWindow(window);
+                if (!self.tagWidth || !self.tagHeight || (self.tagWidth + self.tagHeight == 0)) {
+                    // unfriendly iframe old client, no ebO object in addineyeV2.html, instead grab properties from the querystring of the addineye src attribute
+                    tagProperties = mmQueryString(document.location.href);
+                    if (tagProperties.strBanner) {
+                        // addineyeV2 does have the query string property we need, so must be old client unfriendly iframe (including create iframe tags)
+                        // new client uses JS messaging protocol, and then creates ebO so we would have already grabbed that above
+                        // below string parses the querystring value for strBanner and finds the correct location/values for width and height properties
+                        // inspect tagProperties.strBanner to see what code below does
+                        tagProperties = unescape(tagProperties.strBanner).match(/gEbBannerData[^;]+/)[0].split(":");
+                        self.tagWidth = tagProperties[4];
+                        self.tagHeight = tagProperties[6];
+                    }
+                }
+            }
+            // some serving scenarios will already be able to grab bannerId at this point.
+            bannerId = getBannerId();
+        }
+        //--------------------------------------------------------------------------------------------
+        function mmLastScriptPath(expression) {
+            // Returns the last Script URL Containing the String Expression 
+            // Script Tag Served
+            var paths = document.getElementsByTagName("script");
+            var path = '';
+            for (var items = 0; items < paths.length; ++items) {
+                if (paths[items].src.indexOf(expression) != -1) {
+                    path = paths[items].src;
+                }
+            }
+            if (path != '')
+                return path;
+            // Create Iframe or unfriendly Iframe Tag Served with or any iframe with OAD ads
+            paths = document.getElementsByTagName("iframe");
+            for (var items = 0; items < paths.length; ++items) {
+                if (paths[items].src.indexOf(expression) != -1) {
+                    path = paths[items].src;
+                }
+            }
+            if (path != '')
+                return path;
+            if (document.location.href.indexOf(expression) != -1) {
+                // Create Iframe Tag Served - old client
+                path = document.location.href;
+            }
+            return path;
+        }
+        //-------------------------------------------------------------------------------------------
+        function mmQueryString(path) {
+            // Takes a URL -> Returns Query String Parameters	
+            var queries = new Array();
+            var queryString = path.slice(path.indexOf("?") + 1);
+            var keyValuePairs = queryString.split("&");
+            //Changed this for/in loop to a for/iteration loop as keyvalue pairs has other object in it other than the querystring Split.
+            for (var items = 0; items < keyValuePairs.length; items++) {
+                var item = keyValuePairs[items].split("=");
+                var key = item[0];
+                var value = item[1];
+                queries[key] = value;
+            }
+            return queries;
+        }
+        //-------------------------------------------------------------------------------------------
+        self.getWidthHeightFromEboInWindow = function (win) {
+            if (self.tagWidth && self.tagHeight)
+                return;
+            try {
+                // need to try/catch because if win is unfriendly to displayWin/scriptWin, win.ebO will trigger a security error
+                if (win.ebO && ((win.ebO.adConfig && win.ebO.adConfig.adId == gEbQueries.adid) || (win.ebO.ai == gEbQueries.adid))) {
+                    // if unfriendly iframes, new client OAD scripts run on the displayWin.  there won't be a tag to find on the page, so we need to get width/height differently
+                    self.tagWidth = win.ebO.w;
+                    self.tagHeight = win.ebO.h;
+                } else
+                // this iframe doesn't have an ebO, but it may have sub-iframes which may contain the ebO, so loop and check them
+                    self.loopGetWidthHeightFromEboInWindow(win);
+            } catch (err) {
+                // if security error, win is unfriendly iframe, need to look through it to see if we can find an iframe friendly to displayWin within it
+                self.loopGetWidthHeightFromEboInWindow(win);
+            }
+        }
+        //-------------------------------------------------------------------------------------------
+        self.loopGetWidthHeightFromEboInWindow = function (win) {
+            try {
+                for (var i = 0; i < win.frames.length; i++) {
+                    // if iframe and OAD, script runs in display window, but ebO exists in iframe
+                    self.getWidthHeightFromEboInWindow(win.frames[i]);
+                    if (self.tagWidth && self.tagHeight)
+                        return;
+                }
+            } catch (err) {}
+        }
+        //-------------------------------------------------------------------------------------------
+        function getBannerId() {
+            try {
+                var bID = undefined;
+                if (window.EBG && EBG.ads) {
+                    // EBG is available, see if we find the desired ad in EBG.ads, if not, try old client
+                    try {
+                        var targetAdId = gEbQueries.adid || -1;
+                        for (var adIndex in EBG.ads) {
+                            // loop through all ads in EBG.ads
+                            if (EBG.ads.hasOwnProperty(adIndex)) {
+                                // looking at valid ad in EBG.ads
+                                var ad = EBG.ads[adIndex],
+                                    cfg = ad._adConfig;
+                                if (targetAdId == cfg.adId) {
+                                    //found the target ad
+                                    bID = "ebDiv" + cfg.rnd;
+                                    nc = true;
+                                    break;
+                                }
+                                //found the target ad
+                            }
+                            // looking at valid ad in EBG.ads
+                        }
+                        // loop through all ads in EBG.ads
+                    } catch (e) {}
+                }
+                if (!nc) {
+                    // try for old client
+                    if (typeof gEbEyes != "undefined") {
+                        for (var i = gEbEyes.length - 1; i > -1; i--) {
+                            if (gEbEyes[i].adData.nAdID == gEbQueries.adid) {
+                                bID = "ebFloatingAd_" + gEbEyes[i].adData.nIndex + "_" + gEbEyes[i].adData.strRand;
+                                break;
+                            }
+                        }
+                    }
+                    if (!bID && typeof gEbBanners != "undefined") {
+                        for (var i = gEbBanners.length - 1; i > -1; i--) {
+                            if (gEbBanners[i].adData.nAdID == gEbQueries.adid) {
+                                bID = "ebBannerDiv_" + gEbBanners[i].adData.nIndex + "_" + gEbBanners[i].adData.strRand;
+                                break;
+
+                            }
+                        }
+                    }
+                    if (!bID && typeof gEbStdBanners != "undefined") {
+                        for (var id, i = gEbStdBanners.length - 1; i > -1; i--) {
+                            if (gEbStdBanners[i].nAdID == gEbQueries.adid) {
+                                if (gEbStdBanners[i].strImgID != '')
+                                    id = gEbStdBanners[i].strImgID;
+                                else
+                                    id = gEbStdBanners[i].strFlashObjID;
+                                bID = id;
+                                break;
+
+                            }
+                        }
+                    }
+                    // below code will run for PL Old and New client, but will only help with new client.
+                    if (!bID && (window.ebO && ((ebO.adConfig && ebO.adConfig.adId == gEbQueries.adid) || (ebO.ai == gEbQueries.adid)))) {
+                        bID = ebO.phid;
+                        // this line only works for new client, so sometimes bID will be bland (that's why we re-check for it above on subsequent calls)
+                    }
+                    if (bID)
+                        oc = true;
+                }
+            } catch (e) {};
+            return bID;
+        }
+        //-------------------------------------------------------------------------------------------
+        function imgOnload(obj) {
+            try {
+                if (self.tagWidth)
+                    obj.parentNode.style.width = self.tagWidth + "px";
+                if (self.tagHeight)
+                    obj.parentNode.style.height = self.tagHeight + "px";
+            } catch (err) {
+                setTimeout(function () {
+                        imgOnload(obj)
+                    },
+                    100);
+            }
+        }
+        // writes the pixel image and script to the page, then calls constructor on 3rd party script
+        self.writeBAO = function () {
+            var objParams = {
+                id: 'bap-pixel-' + mmRand,
+                style: {
+                    margin: '0',
+                    padding: '0'
+                },
+                border: '0',
+                width: '0',
+                height: '0',
+                onload: function () {
+                    imgOnload(this);
+                    // after image pixel has loaded, then load 3rd party script
+                    var objParams = {
+                        id: 'durly.js',
+                        type: 'text/javascript',
+                        //src : 'http://c.betrad.com/geo/surly.js'
+                        // MD 20140408 Use dynamic protocl
+                        //src : thisPtcl + '://c.betrad.com/geo/ba.js'
+                        src: thisPtcl + '://c.betrad.com/durly.js?' + ';ad_w=' + self.tagWidth + ';ad_h=' + self.tagHeight + ';coid=' + gEbQueries.coid + ';nid=' + gEbQueries.nid + ';ecaid=' + gEbQueries.ecaid + ';position=' + gEbQueries.position
+                    };
+
+                    self.scriptWaitTimer = setInterval(function () {
+                            mmLoadScriptIntoBannerParentDiv(bannerId, objParams)
+                        },
+                        100);
+                    this.onload = null;
+                },
+                //src : 'http://c.betrad.com/a/4.gif'
+                // MD 20140408 Use dynamic protocl
+                src: thisPtcl + '://c.betrad.com/a/4.gif'
+            };
+            self.imgWaitTimer = setInterval(function () {
+                    mmLoadImageIntoBannerParentDiv(bannerId, objParams)
+                },
+                100);
+
+        }
+        //-------------------------------------------------------------------------------------------
+        function mmLoadImageIntoBannerParentDiv(id, imgParams) {
+            // sometimes we won't be able to get banner id early, so we try again now if it is undefined
+            if (!id)
+                id = bannerId = getBannerId();
+            setSwfDivReference(id);
+            if (!injectionReference)
+                return;
+            clearInterval(self.imgWaitTimer);
+            var img = displayDoc.createElement("img");
+            for (var param in imgParams) {
+                if (imgParams.hasOwnProperty(param)) {
+                    if (param == "style") {
+                        for (var st in imgParams[param]) {
+                            img.style[st] = imgParams[param][st];
+                        }
+                    } else {
+                        img[param] = imgParams[param];
+                    }
+                }
+            }
+            injectionReference.appendChild(img);
+        }
+        //-------------------------------------------------------------------------------------------
+        // CODEREVIEW: this is messy.  should grab value of div and return it, and probably something else should set displayWin/displayDoc, or maybe change func name to all 3 results?
+        function setSwfDivReference(id) {
+            // return div that swf is sitting in, based on swf id passed, also set display displayWin and display displayDoc
+            if (injectionReference)
+                return injectionReference;
+            var displayAssetReference = undefined;
+            if (window.EBG && EBG.adaptor) {
+                // do new client stuff
+                try {
+                    displayAssetReference = EBG.adaptor.getElementById(id);
+                    displayWin = EBG.adaptor.getDisplayWin();
+                    displayDoc = displayWin.document;
+                } catch (e) {}
+            }
+            // do new client stuff
+            if (!displayAssetReference) {
+                //if didn't find it using EBG, then try old client stuff
+                if (typeof gEbDisplayPage != 'undefined' && gEbDisplayPage && typeof gEbDisplayPage.TI != 'undefined' && gEbDisplayPage.TI)
+                    displayWin = gEbDisplayPage.TI.getWin();
+                else
+                    displayWin = window;
+                // stdBanners don't have gEbDisplayPage, so they will just be the regular window object that the script is served into
+                displayDoc = displayWin.document;
+                displayAssetReference = displayDoc.getElementById(id);
+
+                if ((typeof displayAssetReference == "undefined" || !displayAssetReference) && id && id.indexOf("ebBannerDiv_") > -1)
+                    displayAssetReference = displayDoc.getElementById(id.replace("ebBannerDiv_", "ebBannerImage_"));
+            }
+            //if didn't find it using EBG, then try old client stuff
+            try {
+                // if serving with standard banners, and our tag is not in a div on the pubs page, potential for an issue, so might need to reinvestigate and possible create our own temporary div
+                injectionReference = displayAssetReference.parentNode;
+                displayDoc = displayWin.document;
+            } catch (err) {}
+        }
+        //-------------------------------------------------------------------------------------------
+        function mmLoadScriptIntoBannerParentDiv(id, scriptParams) {
+            setSwfDivReference(id);
+            if (injectionReference) {
+                clearInterval(self.scriptWaitTimer);
+                self.scriptLoaded = false;
+                var thirdPartyScript = displayDoc.createElement("script");
+                for (var param in scriptParams) {
+                    if (scriptParams.hasOwnProperty(param)) {
+                        if (param != 'src')
+                            thirdPartyScript[param] = scriptParams[param];
+                    }
+                }
+                if (scriptParams.src)
+                    thirdPartyScript.src = scriptParams.src;
+
+                injectionReference.appendChild(thirdPartyScript);
+            }
+            //Added in CSS block to avoid positioning issues with MSN.
+            try {
+                var ebEvidonStyle = displayDoc.createElement('style');
+                ebEvidonStyle.type = "text/css";
+                var cssCode = "div#BAP-holder{width:auto}";
+                if (ebEvidonStyle.styleSheet) ebEvidonStyle.styleSheet.cssText = cssCode;
+                else ebEvidonStyle.appendChild(displayDoc.createTextNode(cssCode));
+                displayDoc.getElementsByTagName("head")[0].appendChild(ebEvidonStyle);
+            } catch (e) {}
+        }
+    }
+})();
