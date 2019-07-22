@@ -29,7 +29,7 @@ namespace MyScraper
 
            // dB.UpdatingData();
 
-           //  dB.DeletingData();
+          // dB.DeletingData();
 
 
         }
