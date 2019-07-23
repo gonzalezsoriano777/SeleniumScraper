@@ -70,6 +70,7 @@ namespace MyScraper
 
              for (int stocks = 1; stocks <= counter; stocks++)
              {
+                 DateTime stockRecord = DateTime.Now;
                  string symbol = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[1]/a")).GetAttribute("innerText");
                  string lastPrice = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[2]/span")).GetAttribute("innerText");
                  string change = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + stocks + "]/td[3]/span")).GetAttribute("innerText");
@@ -81,6 +82,7 @@ namespace MyScraper
                 
 
                  StockTable newStocks = new StockTable();
+                 newStocks.StockRecord = stockRecord;
                  newStocks.Symbol = symbol;
                  newStocks.LastPrice = lastPrice;
                  newStocks.Change = change;
@@ -101,8 +103,9 @@ namespace MyScraper
 
             foreach(StockTable stock in ListOfStocks)
             {
-                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
+                SqlCommand insert = new SqlCommand("INSERT INTO dbo.StockTable ( StockRecord, Symbol, LastPrice, Change, PChg, Currency, MarketTime, VolumeAvg ) VALUES ( @stockRecord,  @symbol, @lastPrice, @change, @pchg, @currency, @marketTime, @volumeAvg )", db);
 
+                insert.Parameters.AddWithValue("@stockRecord", stock.StockRecord.ToString());
                 insert.Parameters.AddWithValue("symbol", stock.Symbol);
                 insert.Parameters.AddWithValue("lastPrice", stock.LastPrice);
                 insert.Parameters.AddWithValue("change", stock.Change);
