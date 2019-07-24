@@ -16,14 +16,11 @@ namespace MyScraper
 {
     public class Scraping
     {
-        IWebDriver driver = new ChromeDriver();
+            IWebDriver driver = new ChromeDriver();
+
 
         //string[] stockFields =
-          //  { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
-
-        
-        //used for dummy data
-         
+        //  { "@stock_ID" , "@symbol", "@lastPrice", "@change", "@pchg", "@currency", "@marketTime", "@volumeAvg" };
 
         string connectionString =
             @"Data Source=(localdb)\ProjectsV13;Initial Catalog=stockDatabase;Integrated Security=True;Connect Timeout=30;
@@ -31,7 +28,6 @@ namespace MyScraper
 
         public void LogginIn()
         {
-            
             //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");
 
@@ -51,6 +47,7 @@ namespace MyScraper
             IWebElement password = driver.FindElement(By.Id("login-passwd"));
             password.SendKeys("Hector3463");
             password.SendKeys(Keys.Enter);
+
         }
 
         public void TransitionToPortfolio()
