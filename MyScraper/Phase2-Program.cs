@@ -21,15 +21,16 @@ namespace MyScraper
          //  YahooCredentials server = new YahooCredentials();
          // server.Credentials();
 
-           Scraping dB = new Scraping();
+          // Scraping dB = new Scraping();
 
-           dB.LogginIn();
-           dB.TransitionToPortfolio();
-           dB.InsertingData();
+            //dB.LogginIn();
+            //dB.TransitionToPortfolio();
+            //dB.InsertingData();
 
-           // dB.UpdatingData();
-
-         //dB.DeletingData();
+            SingularScraping dbStock = new SingularScraping();
+            dbStock.LogIn();
+            dbStock.TransitionToPortfolio();
+            dbStock.InsertingData();
 
 
         }

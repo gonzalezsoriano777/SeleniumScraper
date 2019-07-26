@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SingleScrape.cs" />
     <Compile Include="DatabaseEntity\DbEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -113,6 +114,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Phase2-Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SqlDatabaseSetup.cs" />
@@ -122,6 +138,9 @@
     <Compile Include="Scraping.cs" />
     <Compile Include="DatabaseEntity\StockTable.cs">
       <DependentUpon>DbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stockData.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="YahooCredentials.cs" />
   </ItemGroup>
@@ -135,6 +154,14 @@
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </None>
     <None Include="DatabaseEntity\packages.config" />
+    <EntityDeploy Include="ModelDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelDB.edmx.diagram">
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Database\SqlServerUnitTest1.resx">
@@ -180,6 +207,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbEntities.edmx</DependentUpon>
       <LastGenOutput>DbEntities.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+      <LastGenOutput>ModelDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+      <LastGenOutput>ModelDB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
