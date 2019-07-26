@@ -114,17 +114,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ModelDB.Context.cs">
+    <Compile Include="SingleDatabaseEntity\ModelDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelDB.cs">
+    <Compile Include="SingleDatabaseEntity\ModelDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelDB.Designer.cs">
+    <Compile Include="SingleDatabaseEntity\ModelDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDB.edmx</DependentUpon>
@@ -139,7 +139,7 @@
     <Compile Include="DatabaseEntity\StockTable.cs">
       <DependentUpon>DbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="stockData.cs">
+    <Compile Include="SingleDatabaseEntity\stockData.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="YahooCredentials.cs" />
@@ -154,11 +154,11 @@
       <DependentUpon>DbEntities.edmx</DependentUpon>
     </None>
     <None Include="DatabaseEntity\packages.config" />
-    <EntityDeploy Include="ModelDB.edmx">
+    <EntityDeploy Include="SingleDatabaseEntity\ModelDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ModelDB.edmx.diagram">
+    <None Include="SingleDatabaseEntity\ModelDB.edmx.diagram">
       <DependentUpon>ModelDB.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -208,12 +208,12 @@
       <DependentUpon>DbEntities.edmx</DependentUpon>
       <LastGenOutput>DbEntities.cs</LastGenOutput>
     </Content>
-    <Content Include="ModelDB.Context.tt">
+    <Content Include="SingleDatabaseEntity\ModelDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelDB.edmx</DependentUpon>
       <LastGenOutput>ModelDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ModelDB.tt">
+    <Content Include="SingleDatabaseEntity\ModelDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelDB.edmx</DependentUpon>
       <LastGenOutput>ModelDB.cs</LastGenOutput>

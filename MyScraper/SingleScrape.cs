@@ -9,6 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 using MyScraper.DatabaseEntity;
+using MyScraper.SingleDatabaseEntity;
 
 namespace MyScraper
 {
