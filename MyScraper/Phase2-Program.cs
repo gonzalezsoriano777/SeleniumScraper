@@ -17,21 +17,19 @@ namespace MyScraper
         static void Main(string[] args)
         {
             
-            // open the database and now data can be put into it
-         //  YahooCredentials server = new YahooCredentials();
-         // server.Credentials();
-
-           Scraping dB = new Scraping();
-
+           // History Table
+            Scraping dB = new Scraping();
             dB.LogginIn();
             dB.TransitionToPortfolio();
             dB.InsertingData();
 
-           // SingularScraping dbStock = new SingularScraping();
-           // dbStock.LogIn();
-           // dbStock.TransitionToPortfolio();
-           // dbStock.InsertingData();
+            //Scraping only the 12 stocks
 
+            // SingularScraping dbStock = new SingularScraping();
+            // dbStock.LogIn();
+            // dbStock.TransitionToPortfolio();
+            // dbStock.InsertingData();
+            
 
         }
 
