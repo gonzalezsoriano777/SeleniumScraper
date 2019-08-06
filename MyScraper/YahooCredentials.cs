@@ -17,10 +17,8 @@ namespace MyScraper
 
         public void Credentials()
         {
-            //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");
 
-            // duration time to sign in
             WebDriverWait LogIn = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             LogIn.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signin")));
 
@@ -48,7 +46,6 @@ namespace MyScraper
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view");
             
-            // grab table data and print it to the console
             IWebElement table = driver.FindElement(By.XPath("//*[@id=\"pf-detail-table\"]/div[1]/table"));
 
             IList<IWebElement> allRows = driver.FindElements(By.TagName("tr"));

@@ -25,10 +25,8 @@ namespace MyScraper
 
         public void LogginIn()
         {
-            //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");
 
-            // duration time to sign in
             WebDriverWait LogIn = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             LogIn.Until(ExpectedConditions.ElementToBeClickable(By.Id("uh-signin")));
             IWebElement signIn = driver.FindElement(By.Id("uh-signin"));

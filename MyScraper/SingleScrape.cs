@@ -23,7 +23,6 @@ namespace MyScraper
 
         public void LogIn()
         {
-            //Navigating yahoo finance
             driver.Navigate().GoToUrl("http://yahoo.com/");
 
             // duration time to sign in
